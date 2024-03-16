@@ -1,0 +1,48 @@
+@use '@angular/material' as mat;
+
+@import 'assets/fonts/jost/font.css';
+@import 'assets/fonts/material-icons/material-icons.css';
+
+//   $red-palette, $pink-palette, $indigo-palette,
+//   $purple-palette, $deep-purple-palette, $blue-palette, $light-blue-palette, $cyan-palette,
+//   $teal-palette, $green-palette, $light-green-palette, $lime-palette, $yellow-palette,
+//   $amber-palette, $orange-palette, $deep-orange-palette, $brown-palette, $grey-palette,
+//   $gray-palette, $blue-grey-palette, $blue-gray-palette, $light-theme-background-palette,
+//   $dark-theme-background-palette, $light-theme-foreground-palette, $dark-theme-foreground-palette;
+
+$primary-palette: mat.define-palette(mat.$orange-palette, 400);
+$accent-palette: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$warn-palette: mat.define-palette(mat.$red-palette);
+
+$typography: mat.define-typography-config(
+  $font-family: 'Jost',
+  $headline-1: null,
+  $headline-2: null,
+  $headline-3: null,
+  $headline-4: null,
+  $headline-5: null,
+  $headline-6: null,
+  $subtitle-1: null,
+  $subtitle-2: null,
+  $body-1: null,
+  $body-2: null,
+  $caption: null,
+  $button: null,
+  $overline: null,
+);
+
+$theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $primary-palette,
+      accent: $accent-palette,
+      warn: $warn-palette,
+    ),
+    typography: $typography,
+    density: 0,
+  )
+);
+
+@include mat.core();
+@include mat.all-component-themes($theme);
+@include mat.all-component-typographies($typography);
