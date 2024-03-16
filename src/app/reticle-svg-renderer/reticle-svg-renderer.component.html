@@ -1,0 +1,23 @@
+@if (reticle$ | async; as reticle) {
+<svg [attr.viewBox]="'0 0 ' + reticle.size + ' ' + reticle.size" xmlns="http://www.w3.org/2000/svg">
+  @for (axis of reticle.axis; track $index) { @if (axis.enabled) {
+  <ng-container *ngTemplateOutlet="svgAxis; context: { reticle, axis }"></ng-container>
+  } }
+</svg>
+}
+
+<ng-template #svgAxis let-reticle="reticle" let-axis="axis">
+  <svg:g [attr.transform]="'rotate(' + axis.angle + ' ' + reticle.size / 2 + ' ' + reticle.size / 2 + ')'">
+    <ng-container *ngTemplateOutlet="svgAxisLine; context: { reticle: reticle, axis: axis }"></ng-container>
+  </svg:g>
+</ng-template>
+
+<ng-template #svgAxisLine let-reticle="reticle" let-axis="axis">
+  <svg:line
+    [attr.x1]="axis.offsetStart"
+    [attr.y1]="reticle.size / 2"
+    [attr.x2]="reticle.size - axis.offsetEnd"
+    [attr.y2]="reticle.size / 2"
+    [attr.stroke-width]="axis.lineWidth"
+    stroke="black" />
+</ng-template>

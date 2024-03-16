@@ -1,8 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
 import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AppComponent } from './app.component';
+import { ReticleFormComponent } from './reticle-form/reticle-form.component';
+import { ReticleSvgRendererComponent } from './reticle-svg-renderer/reticle-svg-renderer.component';
 
 describe('AppComponent', () => {
   // The fixture of the component
@@ -34,25 +35,15 @@ describe('AppComponent', () => {
     expect(ci.title).toEqual('reticle-generator');
   });
 
-  it(`should a .svg div`, () => {
-    expect(de.query(By.css('.svg'))).toBeTruthy();
+  it(`should a ReticleSvgRendererComponent component`, () => {
+    expect(de.query(By.directive(ReticleSvgRendererComponent))).toBeTruthy();
   });
 
-  it(`should a form`, () => {
-    expect(de.query(By.css('form'))).toBeTruthy();
+  it(`should have a header`, () => {
+    expect(de.query(By.css('header'))).toBeTruthy();
   });
 
-  describe('form', () => {
-    it(`should be defined as a FormGroup`, () => {
-      expect(ci.form).toBeInstanceOf(FormGroup);
-    });
-
-    it(`should have a size FormControl`, () => {
-      expect(ci.form.controls.size).toBeInstanceOf(FormControl);
-    });
-
-    it(`should have a paddingX FormControl`, () => {
-      expect(ci.form.controls.axis).toBeInstanceOf(FormArray);
-    });
+  it(`should have ReticleFormComponent`, () => {
+    expect(de.query(By.directive(ReticleFormComponent))).toBeTruthy();
   });
 });
