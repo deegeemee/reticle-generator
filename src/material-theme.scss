@@ -46,3 +46,7 @@ $theme: mat.define-dark-theme(
 @include mat.core();
 @include mat.all-component-themes($theme);
 @include mat.all-component-typographies($typography);
+
+:root {
+  --mat-divider-color: var(--mdc-filled-text-field-container-color);
+}
