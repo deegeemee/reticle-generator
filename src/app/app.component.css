@@ -1,11 +1,15 @@
 :host {
   display: grid;
   grid-template-columns: 5fr minmax(30rem, 20%);
-  grid-template-rows: 1fr;
+  grid-template-rows: max-content 1fr;
 }
 
 header, app-reticle-form {
   background-color: #6b6b6b;
+}
+
+app-reticle-svg-renderer {
+  grid-row: span 2;
 }
 
 header {
