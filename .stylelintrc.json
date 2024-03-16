@@ -1,1 +1,10 @@
-{ "extends": ["stylelint-config-standard"], "ignoreFiles": ["coverage/**"] }
+{
+  "extends": "stylelint-config-standard-scss",
+  "ignoreFiles": ["coverage/**"],
+  "plugins": ["stylelint-scss"],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "at-rule-empty-line-before": null,
+    "scss/dollar-variable-empty-line-before": null
+  }
+}

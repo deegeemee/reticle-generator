@@ -5,7 +5,7 @@ echo "*****Running unit tests******"
 stash_commit="$(git stash create)"
 git reset —-hard
 
-npm test -- --watch-all=false --coverage false && npm run lint && npm run stylelint
+npm run devcheck
 
 status=$?
 

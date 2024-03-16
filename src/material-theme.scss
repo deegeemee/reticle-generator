@@ -43,7 +43,7 @@ $theme: mat.define-dark-theme(
   )
 );
 
-@include mat.core();
+@include mat.core;
 @include mat.all-component-themes($theme);
 @include mat.all-component-typographies($typography);
 
