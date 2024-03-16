@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 describe('AppComponent', () => {
   // The fixture of the component
@@ -38,10 +38,9 @@ describe('AppComponent', () => {
     expect(de.query(By.css('.svg'))).toBeTruthy();
   });
 
-  it(`should a .form div`, () => {
-    expect(de.query(By.css('.form'))).toBeTruthy();
+  it(`should a form`, () => {
+    expect(de.query(By.css('form'))).toBeTruthy();
   });
-
 
   describe('form', () => {
     it(`should be defined as a FormGroup`, () => {
@@ -52,26 +51,8 @@ describe('AppComponent', () => {
       expect(ci.form.controls.size).toBeInstanceOf(FormControl);
     });
 
-    it(`should have a lineWidth FormControl`, () => {
-      expect(ci.form.controls.lineWidth).toBeInstanceOf(FormControl);
+    it(`should have a paddingX FormControl`, () => {
+      expect(ci.form.controls.axis).toBeInstanceOf(FormArray);
     });
-
-    it(`should have a offsetLeft FormControl`, () => {
-      expect(ci.form.controls.offsetLeft).toBeInstanceOf(FormControl);
-    });
-
-    it(`should have a offsetRight FormControl`, () => {
-      expect(ci.form.controls.offsetRight).toBeInstanceOf(FormControl);
-    });
-
-    it(`should have a offsetTop FormControl`, () => {
-      expect(ci.form.controls.offsetTop).toBeInstanceOf(FormControl);
-    });
-
-    it(`should have a offsetBottom FormControl`, () => {
-      expect(ci.form.controls.offsetBottom).toBeInstanceOf(FormControl);
-    });
-
   });
-
 });

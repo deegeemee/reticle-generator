@@ -1,13 +1,95 @@
-<div class="svg"></div>
-
-<div class="form" [formGroup]="form">
-
-  <mat-form-field>
-    <mat-label>SVG image size</mat-label>
-    <input matInput formControlName="size" placeholder="Name">
-    <mat-hint>It's the viewBox size of the svg</mat-hint>
-  </mat-form-field>
-
-
-
+<div class="svg">
+  <svg
+    [attr.viewBox]="'0 0 ' + form.controls.size.value + ' ' + form.controls.size.value"
+    xmlns="http://www.w3.org/2000/svg">
+    @for (axisValue of form.value.axis; track $index) { @if (axisValue.enabled) {
+    <ng-container
+      *ngTemplateOutlet="svgAxis; context: { reticle: form.value, axis: axisValue }"></ng-container>
+    } }
+  </svg>
 </div>
+
+<div class="console" [formGroup]="form">
+  <header>
+    <h1>{{ title }}</h1>
+    <h5>by deegeemee</h5>
+  </header>
+
+  <form>
+    <mat-form-field>
+      <mat-label>svg image size</mat-label>
+      <input matInput formControlName="size" placeholder="Name" />
+    </mat-form-field>
+
+    @for (axis of form.controls.axis.controls; track $index) {
+    <ng-container
+      *ngTemplateOutlet="axisForm; context: { form: form, index: $index }"></ng-container>
+    }
+
+    <mat-divider></mat-divider>
+    <button type="button" mat-flat-button (click)="form.controls.axis.insert(-1, getAxisForm())">
+      Add axis
+    </button>
+  </form>
+</div>
+
+<ng-template #axisForm let-form="form" let-index="index">
+  <mat-divider></mat-divider>
+  <ng-container *ngIf="form.controls.axis.controls[index] as axisForm">
+    <div [formGroup]="axisForm" class="form-axis">
+      <header>
+        <h1>Axis {{ index + 1 }}</h1>
+        <h5>
+          {{ form.controls.size.value - axisForm.value.offsetStart - axisForm.value.offsetStart }}
+          px
+        </h5>
+      </header>
+      <mat-slide-toggle formControlName="enabled">Enabled</mat-slide-toggle>
+      <button type="button" mat-mini-fab (click)="form.controls.axis.removeAt(index)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <mat-form-field>
+        <mat-label>angle of axis</mat-label>
+        <input matInput formControlName="angle" placeholder="Angle" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>line width in px</mat-label>
+        <input matInput formControlName="lineWidth" placeholder="Line width" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>axis start offset</mat-label>
+        <input matInput formControlName="offsetStart" placeholder="offsetStart" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>axis end offset</mat-label>
+        <input matInput formControlName="offsetEnd" placeholder="offsetEnd" />
+      </mat-form-field>
+
+      <div></div>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #svgAxis let-reticle="reticle" let-axis="axis">
+  <svg:g
+    [attr.transform]="
+      'rotate(' + axis.angle + ' ' + reticle.size / 2 + ' ' + reticle.size / 2 + ')'
+    ">
+    <ng-container
+      *ngTemplateOutlet="svgAxisLine; context: { reticle: reticle, axis: axis }"></ng-container>
+  </svg:g>
+</ng-template>
+
+<ng-template #svgAxisLine let-reticle="reticle" let-axis="axis">
+  <svg:line
+    [attr.x1]="axis.offsetStart"
+    [attr.y1]="reticle.size / 2"
+    [attr.x2]="reticle.size - axis.offsetEnd"
+    [attr.y2]="reticle.size / 2"
+    [attr.stroke-width]="axis.lineWidth"
+    stroke="black" />
+</ng-template>
