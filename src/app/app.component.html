@@ -1,3 +1,13 @@
 <div class="svg"></div>
 
-<div class="form"></div>
+<div class="form" [formGroup]="form">
+
+  <mat-form-field>
+    <mat-label>SVG image size</mat-label>
+    <input matInput formControlName="size" placeholder="Name">
+    <mat-hint>It's the viewBox size of the svg</mat-hint>
+  </mat-form-field>
+
+
+
+</div>
