@@ -17,14 +17,31 @@ header {
   color: white;
   background-color: var(--mdc-filled-text-field-container-color);
   text-align: right;
-  
+  display: grid;
+  grid-template-columns: min-content min-content 1fr;
+  align-items: center;
+
   h1, h5 {
     margin: 0;
     font-weight: 200;
-    line-height: 1;
+    line-height: 1.1;
   }
 
   h5 {
     opacity: 0.5;
   }
+
+  a {
+    grid-row: span 2;
+    justify-self: start;
+  }
+
+  a+a {
+    margin-left: 0.3rem;
+  }
+
+  img {
+    max-height: 1.5rem;
+  }
+
 }
