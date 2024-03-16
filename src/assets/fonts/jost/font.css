@@ -1,9 +1,9 @@
 @font-face {
-  font-family: 'Jost';
+  font-family: Jost;
   src: url('/assets/fonts/jost/Jost-VariableFont_wght.ttf');
 }
 
 @font-face {
-  font-family: 'JostItalic';
+  font-family: JostItalic;
   src: url('/assets/fonts/jost/Jost-Italic-VariableFont_wght.ttf');
 }
