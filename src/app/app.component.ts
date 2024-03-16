@@ -1,15 +1,24 @@
+import { AsyncPipe } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { MaterialModule } from './material.module';
+import { catchError, map, of } from 'rxjs';
 import { ReticleFormComponent } from './reticle-form/reticle-form.component';
 import { ReticleSvgRendererComponent } from './reticle-svg-renderer/reticle-svg-renderer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [MaterialModule, ReticleFormComponent, ReticleSvgRendererComponent],
+  imports: [AsyncPipe, HttpClientModule, ReticleFormComponent, ReticleSvgRendererComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'reticle-generator';
+
+  version$ = this.http.request('GET', '/assets/version', { responseType: 'text' }).pipe(
+    catchError(() => of('unknown')),
+    map(version => version.trim())
+  );
+
+  constructor(readonly http: HttpClient) {}
 }

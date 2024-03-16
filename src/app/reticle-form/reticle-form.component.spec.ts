@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReticleFormComponent } from './reticle-form.component';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AxisType } from '../reticle.types';
 
 describe('ReticleFormComponent', () => {
   let component: ReticleFormComponent;
@@ -32,5 +33,32 @@ describe('ReticleFormComponent', () => {
 
   it(`should have a paddingX FormControl`, () => {
     expect(component.form.controls.axis).toBeInstanceOf(FormArray);
+  });
+
+  describe('getAxisForm & getAxisSectionForm', () => {
+    it(`should return a FormGroup`, () => {
+      expect(component.getAxisForm()).toBeInstanceOf(FormGroup);
+    });
+
+    it(`should return a FormGroup with data`, () => {
+      const testData: AxisType = {
+        enabled: true,
+        angle: 0,
+        offsetStart: 256,
+        offsetEnd: 256,
+        lineWidth: 3,
+        sections: [
+          {
+            enabled: true,
+            count: 4,
+            width: 2,
+            offset: 0,
+            size: 10,
+          },
+        ],
+      };
+      const axis = component.getAxisForm(testData);
+      expect(axis.value).toEqual(testData);
+    });
   });
 });

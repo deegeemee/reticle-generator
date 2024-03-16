@@ -52,9 +52,7 @@ export class ReticleFormComponent {
         nonNullable: true,
       }),
       sections: new FormArray(
-        value?.sections.length
-          ? value.sections.map(section => this.getAxisSectionForm(section))
-          : [this.getAxisSectionForm()]
+        value?.sections ? value.sections.map(section => this.getAxisSectionForm(section)) : [this.getAxisSectionForm()]
       ),
     });
 
@@ -80,11 +78,11 @@ export class ReticleFormComponent {
         validators: [Validators.min(1), Validators.max(10)],
         nonNullable: true,
       }),
-      offset: new FormControl<number>(5, {
+      offset: new FormControl<number>(-10, {
         validators: [Validators.min(0), Validators.max(10)],
         nonNullable: true,
       }),
-      size: new FormControl<number>(10, {
+      size: new FormControl<number>(20, {
         validators: [Validators.min(0), Validators.max(10)],
         nonNullable: true,
       }),

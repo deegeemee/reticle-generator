@@ -1,9 +1,8 @@
 #!/bin/sh
 
-echo "*****Running unit tests******"
-
 stash_commit="$(git stash create)"
-git reset —-hard
+
+git reset
 
 npm run devcheck
 

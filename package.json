@@ -1,16 +1,16 @@
 {
   "name": "reticle-generator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "prestart": "cp assets/git-hooks/* .git/hooks/ && chmod +x .git/hooks/* && echo 'hooks copied'",
-    "postversion": "jq -r '.[\"version\"]' package.json > assets/version && git add . && git commit --amend -m \"Release v`cat assets/version`\" && git tag -f v`cat assets/version`",
+    "postversion": "jq -r '.[\"version\"]' package.json > src/assets/version && git add . && git commit --amend -m \"Release v`cat src/assets/version`\" && git tag -f v`cat src/assets/version`",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "dev": "npm start",
     "devcheck": "npm test --watch-all=false --coverage false && npm run lint && npm run stylelint",
-    "test": "ng test",
+    "test": "ng test --",
     "test:watch": "ng test --watch --coverage false --",
     "lint": "ng lint",
     "stylelint": "stylelint \"**/*.{css,scss}\""
