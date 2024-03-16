@@ -10,7 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "dev": "npm start",
     "test": "ng test",
-    "test:watch": "ng test --watch",
+    "test:watch": "ng test --watch --coverage false --",
     "lint": "ng lint"
   },
   "private": true,
