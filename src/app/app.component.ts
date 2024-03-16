@@ -74,7 +74,11 @@ export class AppComponent {
         validators: [Validators.min(0), Validators.max(360)],
         nonNullable: true,
       }),
-      sections: new FormArray(value?.sections.length ? value.sections.map(this.getAxisSectionForm) : []),
+      sections: new FormArray(
+        value?.sections.length
+          ? value.sections.map(section => this.getAxisSectionForm(section))
+          : [this.getAxisSectionForm()]
+      ),
     });
 
     if (value) {
@@ -88,7 +92,7 @@ export class AppComponent {
    * Return for group for an axis section
    * @returns FormGroup<AxisSectionFormType>
    */
-  getAxisSectionForm(value: AxisSectionType): Form<AxisSectionType> {
+  getAxisSectionForm(value?: AxisSectionType): Form<AxisSectionType> {
     const fg: Form<AxisSectionType> = new FormGroup({
       enabled: new FormControl<boolean>(true, { nonNullable: true }),
       count: new FormControl<number>(0, {
