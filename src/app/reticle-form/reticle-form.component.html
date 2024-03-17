@@ -30,22 +30,46 @@
 
       <mat-form-field>
         <mat-label>angle of axis</mat-label>
-        <input type="number" matInput formControlName="angle" placeholder="Angle" />
+        <input
+          type="number"
+          matInput
+          formControlName="angle"
+          placeholder="Angle"
+          [min]="axisFormSettings.angle.min"
+          [max]="axisFormSettings.angle.max" />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>line width in px</mat-label>
-        <input type="number" matInput formControlName="strokeWidth" placeholder="Stroke width" />
+        <input
+          type="number"
+          matInput
+          formControlName="strokeWidth"
+          placeholder="Stroke width"
+          [min]="axisFormSettings.strokeWidth.min"
+          [max]="axisFormSettings.strokeWidth.max" />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>axis start offset</mat-label>
-        <input type="number" matInput formControlName="offsetStart" placeholder="offsetStart" />
+        <input
+          type="number"
+          matInput
+          formControlName="offsetStart"
+          placeholder="offsetStart"
+          [min]="axisFormSettings.offsetStart.min"
+          [max]="axisFormSettings.offsetStart.max" />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>axis end offset</mat-label>
-        <input type="number" matInput formControlName="offsetEnd" placeholder="offsetEnd" />
+        <input
+          type="number"
+          matInput
+          formControlName="offsetEnd"
+          placeholder="offsetEnd"
+          [min]="axisFormSettings.offsetEnd.min"
+          [max]="axisFormSettings.offsetEnd.max" />
       </mat-form-field>
     </div>
 
@@ -69,22 +93,57 @@
 
       <mat-form-field>
         <mat-label>count</mat-label>
-        <input type="number" matInput formControlName="count" placeholder="Count" />
+        <input
+          type="number"
+          matInput
+          formControlName="count"
+          placeholder="Count"
+          [min]="axisSectionFormSettings.count.min"
+          [max]="axisSectionFormSettings.count.max" />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>gap in px</mat-label>
-        <input type="number" matInput formControlName="gap" placeholder="gap" />
+        <input
+          type="number"
+          matInput
+          formControlName="gap"
+          placeholder="gap"
+          [min]="axisSectionFormSettings.gap.min"
+          [max]="axisSectionFormSettings.gap.max" />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>offset</mat-label>
-        <input type="number" matInput formControlName="offset" placeholder="offset" />
+        <input
+          type="number"
+          matInput
+          formControlName="offset"
+          placeholder="offset"
+          [min]="axisSectionFormSettings.offset.min"
+          [max]="axisSectionFormSettings.offset.max" />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>stroke width</mat-label>
-        <input type="number" matInput formControlName="strokeWidth" placeholder="Stroke width" />
+        <input
+          type="number"
+          matInput
+          formControlName="strokeWidth"
+          placeholder="Stroke width"
+          [min]="axisSectionFormSettings.strokeWidth.min"
+          [max]="axisSectionFormSettings.strokeWidth.max" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Length</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="length"
+          placeholder="Length"
+          [min]="axisSectionFormSettings.length.min"
+          [max]="axisSectionFormSettings.length.max" />
       </mat-form-field>
     </div>
   </ng-container>
