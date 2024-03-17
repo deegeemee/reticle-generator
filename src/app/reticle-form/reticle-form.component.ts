@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, debounceTime, filter, map, startWith } from 'rxjs';
 import { AutoForm } from '../form.types';
 import { MaterialModule } from '../material.module';
 import { AxisSectionType, AxisType, ReticleType } from '../reticle.types';
@@ -23,6 +23,8 @@ export class ReticleFormComponent {
   });
 
   readonly valueChanges: Observable<ReticleType> = this.form.valueChanges.pipe(
+    filter(() => this.form.valid),
+    debounceTime(100),
     startWith(this.form.value),
     // Always map to raw value to ensure full object is emitted
     map(() => this.form.getRawValue() as ReticleType)
@@ -47,7 +49,7 @@ export class ReticleFormComponent {
         validators: [Validators.min(0), Validators.max(360)],
         nonNullable: true,
       }),
-      lineWidth: new FormControl<number>(3, {
+      strokeWidth: new FormControl<number>(3, {
         validators: [Validators.min(0), Validators.max(360)],
         nonNullable: true,
       }),
@@ -74,16 +76,20 @@ export class ReticleFormComponent {
         validators: [Validators.min(0), Validators.max(10)],
         nonNullable: true,
       }),
-      width: new FormControl<number>(1, {
-        validators: [Validators.min(1), Validators.max(10)],
+      gap: new FormControl<number>(20, {
+        validators: [Validators.min(1), Validators.max(100)],
         nonNullable: true,
       }),
       offset: new FormControl<number>(-10, {
-        validators: [Validators.min(0), Validators.max(10)],
+        validators: [Validators.min(-100), Validators.max(100)],
         nonNullable: true,
       }),
-      size: new FormControl<number>(20, {
-        validators: [Validators.min(0), Validators.max(10)],
+      length: new FormControl<number>(20, {
+        validators: [Validators.min(0), Validators.max(200)],
+        nonNullable: true,
+      }),
+      strokeWidth: new FormControl<number>(1, {
+        validators: [Validators.min(1), Validators.max(20)],
         nonNullable: true,
       }),
     });

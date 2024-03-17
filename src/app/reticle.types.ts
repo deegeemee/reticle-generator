@@ -6,15 +6,16 @@ export type ReticleType = {
 export type AxisSectionType = {
   enabled: boolean;
   count: number;
-  width: number;
+  gap: number;
   offset: number;
-  size: number;
+  length: number;
+  strokeWidth: number;
 };
 
 export type AxisType = {
   enabled: boolean;
   angle: number;
-  lineWidth: number;
+  strokeWidth: number;
   offsetStart: number;
   offsetEnd: number;
   sections: AxisSectionType[];

@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <mat-form-field>
     <mat-label>svg image size</mat-label>
-    <input matInput formControlName="size" placeholder="Name" />
+    <input type="number" matInput formControlName="size" placeholder="Name" />
   </mat-form-field>
 
   @for (axis of form.controls.axis.controls; track $index) {
@@ -30,22 +30,22 @@
 
       <mat-form-field>
         <mat-label>angle of axis</mat-label>
-        <input matInput formControlName="angle" placeholder="Angle" />
+        <input type="number" matInput formControlName="angle" placeholder="Angle" />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>line width in px</mat-label>
-        <input matInput formControlName="lineWidth" placeholder="Line width" />
+        <input type="number" matInput formControlName="strokeWidth" placeholder="Stroke width" />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>axis start offset</mat-label>
-        <input matInput formControlName="offsetStart" placeholder="offsetStart" />
+        <input type="number" matInput formControlName="offsetStart" placeholder="offsetStart" />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>axis end offset</mat-label>
-        <input matInput formControlName="offsetEnd" placeholder="offsetEnd" />
+        <input type="number" matInput formControlName="offsetEnd" placeholder="offsetEnd" />
       </mat-form-field>
     </div>
 
@@ -69,22 +69,22 @@
 
       <mat-form-field>
         <mat-label>count</mat-label>
-        <input matInput formControlName="count" placeholder="Count" />
+        <input type="number" matInput formControlName="count" placeholder="Count" />
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>width in px</mat-label>
-        <input matInput formControlName="width" placeholder="width" />
+        <mat-label>gap in px</mat-label>
+        <input type="number" matInput formControlName="gap" placeholder="gap" />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>offset</mat-label>
-        <input matInput formControlName="offset" placeholder="offset" />
+        <input type="number" matInput formControlName="offset" placeholder="offset" />
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>size</mat-label>
-        <input matInput formControlName="size" placeholder="size" />
+        <mat-label>stroke width</mat-label>
+        <input type="number" matInput formControlName="strokeWidth" placeholder="Stroke width" />
       </mat-form-field>
     </div>
   </ng-container>

@@ -8,7 +8,10 @@
 
 <ng-template #svgAxis let-reticle="reticle" let-axis="axis">
   <svg:g [attr.transform]="'rotate(' + axis.angle + ' ' + reticle.size / 2 + ' ' + reticle.size / 2 + ')'">
-    <ng-container *ngTemplateOutlet="svgAxisLine; context: { reticle: reticle, axis: axis }"></ng-container>
+    <ng-container *ngTemplateOutlet="svgAxisLine; context: { reticle, axis }"></ng-container>
+    @for (section of axis.sections; track $index) {
+    <ng-container *ngTemplateOutlet="svgAxisSections; context: { reticle, axis, section }"></ng-container>
+    }
   </svg:g>
 </ng-template>
 
@@ -18,6 +21,18 @@
     [attr.y1]="reticle.size / 2"
     [attr.x2]="reticle.size - axis.offsetEnd"
     [attr.y2]="reticle.size / 2"
-    [attr.stroke-width]="axis.lineWidth"
+    [attr.stroke-width]="axis.strokeWidth"
     stroke="black" />
+</ng-template>
+
+<ng-template #svgAxisSections let-reticle="reticle" let-axis="axis" let-section="section">
+  @if (getAxisSections(reticle, axis, section); as sections) { @for (lineAttr of sections; track lineAttr.id) {
+  <svg:line
+    [attr.x1]="lineAttr.x1"
+    [attr.y1]="lineAttr.y1"
+    [attr.x2]="lineAttr.x2"
+    [attr.y2]="lineAttr.y2"
+    [attr.stroke-width]="lineAttr.stokeWidth"
+    stroke="black" />
+  } }
 </ng-template>

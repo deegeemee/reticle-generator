@@ -46,14 +46,15 @@ describe('ReticleFormComponent', () => {
         angle: 0,
         offsetStart: 256,
         offsetEnd: 256,
-        lineWidth: 3,
+        strokeWidth: 3,
         sections: [
           {
             enabled: true,
             count: 4,
-            width: 2,
+            gap: 2,
             offset: 0,
-            size: 10,
+            strokeWidth: 10,
+            length: 20,
           },
         ],
       };
