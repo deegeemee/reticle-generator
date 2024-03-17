@@ -31,7 +31,8 @@ export class ReticleSvgRendererComponent {
     const center = reticle.size / 2;
 
     section.gap = section.gap ?? 0;
-    if (!section.gap) {
+
+    if (!section.enabled || !section.gap) {
       return [];
     }
 

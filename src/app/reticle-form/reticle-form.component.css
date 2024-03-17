@@ -10,15 +10,11 @@ form {
     grid-column: span 4;
   }
 
-  header {
-    grid-column: span 2;
-  }
-
-  mat-form-field {
-    grid-column: span 2;
-  }
-
   .form-axis {
+    header {
+      grid-column: span 3;
+    }
+
     grid-column: span 4;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -28,5 +24,25 @@ form {
     .mat-mdc-mini-fab {
       justify-self: end;
     }
+  }
+
+  .form-axis-section {
+    header {
+      grid-column: span 4;
+    }
+    
+    grid-column: span 4;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1rem;
+    align-items: center;
+
+    .mat-mdc-mini-fab {
+      justify-self: end;
+    }
+  }
+
+  .form-axis-section, .form-axis-section+button {
+    margin-left: 15%;
   }
 }
