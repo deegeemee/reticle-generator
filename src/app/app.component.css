@@ -1,6 +1,6 @@
 :host {
   display: grid;
-  grid-template-columns: 5fr minmax(80rem, 40%);
+  grid-template-columns: 5fr 5fr;
   grid-template-rows: max-content 1fr;
 }
 

@@ -13,7 +13,6 @@
 </form>
 
 <ng-template #axisForm let-form="form" let-axisIndex="axisIndex">
-  <mat-divider></mat-divider>
   <ng-container *ngIf="form.controls.axis.controls[axisIndex] as axisForm">
     <div [formGroup]="axisForm" class="form-axis">
       <header>
@@ -73,20 +72,20 @@
       </mat-form-field>
     </div>
 
-    @for (section of axisForm.controls.sections.controls; let sectionIndex = $index; track sectionIndex) {
-    <ng-container *ngTemplateOutlet="axisSectionForm; context: { axisForm, axisIndex, sectionIndex }"></ng-container>
+    @for (marker of axisForm.controls.markers.controls; let markerIndex = $index; track markerIndex) {
+    <ng-container *ngTemplateOutlet="axisMarkerForm; context: { axisForm, axisIndex, markerIndex }"></ng-container>
     }
   </ng-container>
 </ng-template>
 
-<ng-template #axisSectionForm let-axisForm="axisForm" let-axisIndex="axisIndex" let-sectionIndex="sectionIndex">
-  <ng-container *ngIf="axisForm.controls.sections.controls[sectionIndex] as sectionForm">
-    <div [formGroup]="sectionForm" class="form-axis-section">
+<ng-template #axisMarkerForm let-axisForm="axisForm" let-axisIndex="axisIndex" let-markerIndex="markerIndex">
+  <ng-container *ngIf="axisForm.controls.markers.controls[markerIndex] as markerForm">
+    <div [formGroup]="markerForm" class="form-axis-marker">
       <header>
-        <h1>Axis {{ axisIndex + 1 }} - Section {{ sectionIndex + 1 }}</h1>
+        <h1>Axis {{ axisIndex + 1 }} - Marker {{ markerIndex + 1 }}</h1>
         <mat-slide-toggle formControlName="enabled">Enabled</mat-slide-toggle>
       </header>
-      <button type="button" mat-mini-fab (click)="axisForm.controls.sections.removeAt(sectionIndex)">
+      <button type="button" mat-mini-fab (click)="axisForm.controls.markers.removeAt(markerIndex)">
         <mat-icon>delete</mat-icon>
       </button>
 
@@ -97,8 +96,8 @@
           matInput
           formControlName="count"
           placeholder="Count"
-          [min]="axisSectionFormSettings.count.min"
-          [max]="axisSectionFormSettings.count.max" />
+          [min]="axisMarkerFormSettings.count.min"
+          [max]="axisMarkerFormSettings.count.max" />
       </mat-form-field>
 
       <mat-form-field>
@@ -108,8 +107,8 @@
           matInput
           formControlName="gap"
           placeholder="gap"
-          [min]="axisSectionFormSettings.gap.min"
-          [max]="axisSectionFormSettings.gap.max" />
+          [min]="axisMarkerFormSettings.gap.min"
+          [max]="axisMarkerFormSettings.gap.max" />
       </mat-form-field>
 
       <mat-form-field>
@@ -119,8 +118,8 @@
           matInput
           formControlName="offset"
           placeholder="offset"
-          [min]="axisSectionFormSettings.offset.min"
-          [max]="axisSectionFormSettings.offset.max" />
+          [min]="axisMarkerFormSettings.offset.min"
+          [max]="axisMarkerFormSettings.offset.max" />
       </mat-form-field>
 
       <mat-form-field>
@@ -130,8 +129,8 @@
           matInput
           formControlName="strokeWidth"
           placeholder="Stroke width"
-          [min]="axisSectionFormSettings.strokeWidth.min"
-          [max]="axisSectionFormSettings.strokeWidth.max" />
+          [min]="axisMarkerFormSettings.strokeWidth.min"
+          [max]="axisMarkerFormSettings.strokeWidth.max" />
       </mat-form-field>
 
       <mat-form-field>
@@ -141,13 +140,13 @@
           matInput
           formControlName="length"
           placeholder="Length"
-          [min]="axisSectionFormSettings.length.min"
-          [max]="axisSectionFormSettings.length.max" />
+          [min]="axisMarkerFormSettings.length.min"
+          [max]="axisMarkerFormSettings.length.max" />
       </mat-form-field>
 
-      @if(sectionIndex === axisForm.value.sections.length - 1) {
-      <button type="button" mat-flat-button (click)="axisForm.controls.sections.insert(-1, getAxisSectionForm())">
-        Add section
+      @if(markerIndex === axisForm.value.markers.length - 1) {
+      <button type="button" mat-flat-button (click)="axisForm.controls.markers.insert(-1, getAxisMarkerForm())">
+        Add marker
       </button>
       }
     </div>

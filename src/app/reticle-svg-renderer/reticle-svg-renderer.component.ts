@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AxisSectionType, AxisType, ReticleType } from '../reticle.types';
+import { AxisMarkerType, AxisType, ReticleType } from '../reticle.types';
 import { CommonModule } from '@angular/common';
 
-type SectionLine = {
+type MarkerLine = {
   x1: number;
   x2: number;
   y1: number;
@@ -12,7 +12,7 @@ type SectionLine = {
   stroke: string;
 };
 
-type SectionLineId = SectionLine & {
+type MarkerLineId = MarkerLine & {
   id: string;
 };
 
@@ -27,21 +27,21 @@ export class ReticleSvgRendererComponent {
   @Input({ required: true })
   reticle$!: Observable<ReticleType>;
 
-  getAxisSections(reticle: ReticleType, axis: AxisType, section: AxisSectionType): SectionLineId[] {
+  getAxisMarkers(reticle: ReticleType, axis: AxisType, marker: AxisMarkerType): MarkerLineId[] {
     const center = reticle.size / 2;
 
-    section.gap = section.gap ?? 0;
+    marker.gap = marker.gap ?? 0;
 
-    if (!section.enabled || !section.gap) {
+    if (!marker.enabled || !marker.gap) {
       return [];
     }
 
-    const lines: SectionLine[] = [];
+    const lines: MarkerLine[] = [];
 
     const line = {
-      y1: center + section.length + section.offset,
-      y2: center + section.offset,
-      stokeWidth: section.strokeWidth,
+      y1: center + marker.length + marker.offset,
+      y2: center + marker.offset,
+      stokeWidth: marker.strokeWidth,
       stroke: 'black',
     };
 
@@ -52,7 +52,7 @@ export class ReticleSvgRendererComponent {
         x1: curDistance,
         x2: curDistance,
       });
-      curDistance += section.gap;
+      curDistance += marker.gap;
     }
 
     curDistance = center;
@@ -62,11 +62,11 @@ export class ReticleSvgRendererComponent {
         x1: curDistance,
         x2: curDistance,
       });
-      curDistance -= section.gap;
+      curDistance -= marker.gap;
     }
     return lines.map((line, i) => ({
       ...line,
-      id: `axis-${axis.angle}-section-${i}-line-${line.x1}-${line.y1}-${line.x2}-${line.y2}`,
+      id: `axis-${axis.angle}-marker-${i}-line-${line.x1}-${line.y1}-${line.x2}-${line.y2}`,
     }));
   }
 }

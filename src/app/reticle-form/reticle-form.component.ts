@@ -4,7 +4,7 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } fr
 import { Observable, debounceTime, filter, map, startWith } from 'rxjs';
 import { AutoForm } from '../form.types';
 import { MaterialModule } from '../material.module';
-import { AxisSectionType, AxisType, ReticleType } from '../reticle.types';
+import { AxisMarkerType, AxisType, ReticleType } from '../reticle.types';
 
 export type NumberFormElementSettings<T> = {
   [P in keyof T]: {
@@ -22,14 +22,14 @@ export type NumberFormElementSettings<T> = {
   styleUrl: './reticle-form.component.css',
 })
 export class ReticleFormComponent {
-  readonly axisFormSettings: NumberFormElementSettings<Omit<AxisType, 'sections' | 'enabled'>> = {
+  readonly axisFormSettings: NumberFormElementSettings<Omit<AxisType, 'markers' | 'enabled'>> = {
     angle: { default: 0, min: 0, max: 360 },
     offsetStart: { default: 256, min: 0, max: 512 },
     offsetEnd: { default: 256, min: 0, max: 512 },
     strokeWidth: { default: 3, min: 1, max: 20 },
   };
 
-  readonly axisSectionFormSettings: NumberFormElementSettings<Omit<AxisSectionType, 'enabled'>> = {
+  readonly axisMarkerFormSettings: NumberFormElementSettings<Omit<AxisMarkerType, 'enabled'>> = {
     count: { default: 0, min: 0, max: 10 },
     gap: { default: 20, min: 1, max: 100 },
     offset: { default: -10, min: -100, max: 100 },
@@ -42,7 +42,7 @@ export class ReticleFormComponent {
       validators: [Validators.min(512), Validators.max(4096)],
       nonNullable: true,
     }),
-    axis: new FormArray<AutoForm<AxisType>>([this.getAxisForm()]),
+    axis: new FormArray<AutoForm<AxisType>>([]),
   });
 
   readonly valueChanges: Observable<ReticleType> = this.form.valueChanges.pipe(
@@ -85,9 +85,7 @@ export class ReticleFormComponent {
         ],
         nonNullable: true,
       }),
-      sections: new FormArray(
-        value?.sections ? value.sections.map(section => this.getAxisSectionForm(section)) : [this.getAxisSectionForm()]
-      ),
+      markers: new FormArray(value?.markers ? value.markers.map(marker => this.getAxisMarkerForm(marker)) : []),
     });
 
     if (value) {
@@ -98,44 +96,44 @@ export class ReticleFormComponent {
   }
 
   /**
-   * Return for group for an axis section
-   * @returns FormGroup<AxisSectionFormType>
+   * Return for group for an axis marker
+   * @returns FormGroup<AxisMarkerFormType>
    */
-  getAxisSectionForm(value?: AxisSectionType): AutoForm<AxisSectionType> {
-    const fg: AutoForm<AxisSectionType> = new FormGroup({
+  getAxisMarkerForm(value?: AxisMarkerType): AutoForm<AxisMarkerType> {
+    const fg: AutoForm<AxisMarkerType> = new FormGroup({
       enabled: new FormControl<boolean>(true, { nonNullable: true }),
-      count: new FormControl<number>(this.axisSectionFormSettings.count.default, {
+      count: new FormControl<number>(this.axisMarkerFormSettings.count.default, {
         validators: [
-          Validators.min(this.axisSectionFormSettings.count.min),
-          Validators.max(this.axisSectionFormSettings.count.max),
+          Validators.min(this.axisMarkerFormSettings.count.min),
+          Validators.max(this.axisMarkerFormSettings.count.max),
         ],
         nonNullable: true,
       }),
-      gap: new FormControl<number>(this.axisSectionFormSettings.gap.default, {
+      gap: new FormControl<number>(this.axisMarkerFormSettings.gap.default, {
         validators: [
-          Validators.min(this.axisSectionFormSettings.gap.min),
-          Validators.max(this.axisSectionFormSettings.gap.max),
+          Validators.min(this.axisMarkerFormSettings.gap.min),
+          Validators.max(this.axisMarkerFormSettings.gap.max),
         ],
         nonNullable: true,
       }),
-      offset: new FormControl<number>(this.axisSectionFormSettings.offset.default, {
+      offset: new FormControl<number>(this.axisMarkerFormSettings.offset.default, {
         validators: [
-          Validators.min(this.axisSectionFormSettings.offset.min),
-          Validators.max(this.axisSectionFormSettings.offset.max),
+          Validators.min(this.axisMarkerFormSettings.offset.min),
+          Validators.max(this.axisMarkerFormSettings.offset.max),
         ],
         nonNullable: true,
       }),
-      length: new FormControl<number>(this.axisSectionFormSettings.length.default, {
+      length: new FormControl<number>(this.axisMarkerFormSettings.length.default, {
         validators: [
-          Validators.min(this.axisSectionFormSettings.length.min),
-          Validators.max(this.axisSectionFormSettings.length.max),
+          Validators.min(this.axisMarkerFormSettings.length.min),
+          Validators.max(this.axisMarkerFormSettings.length.max),
         ],
         nonNullable: true,
       }),
-      strokeWidth: new FormControl<number>(this.axisSectionFormSettings.strokeWidth.default, {
+      strokeWidth: new FormControl<number>(this.axisMarkerFormSettings.strokeWidth.default, {
         validators: [
-          Validators.min(this.axisSectionFormSettings.strokeWidth.min),
-          Validators.max(this.axisSectionFormSettings.strokeWidth.max),
+          Validators.min(this.axisMarkerFormSettings.strokeWidth.min),
+          Validators.max(this.axisMarkerFormSettings.strokeWidth.max),
         ],
         nonNullable: true,
       }),

@@ -35,7 +35,7 @@ describe('ReticleFormComponent', () => {
     expect(component.form.controls.axis).toBeInstanceOf(FormArray);
   });
 
-  describe('getAxisForm & getAxisSectionForm', () => {
+  describe('getAxisForm & getAxisMarkerForm', () => {
     it(`should return a FormGroup`, () => {
       expect(component.getAxisForm()).toBeInstanceOf(FormGroup);
     });
@@ -47,7 +47,7 @@ describe('ReticleFormComponent', () => {
         offsetStart: 256,
         offsetEnd: 256,
         strokeWidth: 3,
-        sections: [
+        markers: [
           {
             enabled: true,
             count: 4,

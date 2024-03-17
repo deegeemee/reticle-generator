@@ -3,7 +3,7 @@ export type ReticleType = {
   axis: AxisType[];
 };
 
-export type AxisSectionType = {
+export type AxisMarkerType = {
   enabled: boolean;
   count: number;
   gap: number;
@@ -18,5 +18,5 @@ export type AxisType = {
   strokeWidth: number;
   offsetStart: number;
   offsetEnd: number;
-  sections: AxisSectionType[];
+  markers: AxisMarkerType[];
 };
