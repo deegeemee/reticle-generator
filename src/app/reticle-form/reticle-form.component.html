@@ -5,11 +5,20 @@
   </mat-form-field>
 
   @for (axis of form.controls.axis.controls; track $index) {
-  <ng-container *ngTemplateOutlet="axisForm; context: { form: form, axisIndex: $index }"></ng-container>
+  <ng-container *ngTemplateOutlet="axisForm; context: { form, axisIndex: $index }"></ng-container>
+  <mat-divider></mat-divider>
+  } @for (circle of form.controls.circles.controls; track $index) {
+  <ng-container *ngTemplateOutlet="circleForm; context: { form, circleIndex: $index }"></ng-container>
   <mat-divider></mat-divider>
   }
 
-  <button type="button" mat-flat-button (click)="form.controls.axis.insert(-1, getAxisForm())">Add axis</button>
+  <button
+    type="button"
+    mat-flat-button
+    (click)="form.controls.axis.insert(form.controls.axis.controls.length, getAxisForm())">
+    Add axis
+  </button>
+  <button type="button" mat-flat-button (click)="form.controls.circles.insert(-1, getCircleForm())">Add circle</button>
 </form>
 
 <ng-template #axisForm let-form="form" let-axisIndex="axisIndex">
@@ -75,6 +84,10 @@
     @for (marker of axisForm.controls.markers.controls; let markerIndex = $index; track markerIndex) {
     <ng-container *ngTemplateOutlet="axisMarkerForm; context: { axisForm, axisIndex, markerIndex }"></ng-container>
     }
+
+    <button type="button" mat-flat-button (click)="axisForm.controls.markers.insert(-1, getAxisMarkerForm())">
+      Add marker
+    </button>
   </ng-container>
 </ng-template>
 
@@ -143,12 +156,42 @@
           [min]="axisMarkerFormSettings.length.min"
           [max]="axisMarkerFormSettings.length.max" />
       </mat-form-field>
+    </div>
+  </ng-container>
+</ng-template>
 
-      @if(markerIndex === axisForm.value.markers.length - 1) {
-      <button type="button" mat-flat-button (click)="axisForm.controls.markers.insert(-1, getAxisMarkerForm())">
-        Add marker
+<ng-template #circleForm let-form="form" let-circleIndex="circleIndex">
+  <ng-container *ngIf="form.controls.circles.controls[circleIndex] as circleForm">
+    <div [formGroup]="circleForm" class="form-circle">
+      <header>
+        <h1>Circle {{ circleIndex + 1 }}</h1>
+        <mat-slide-toggle formControlName="enabled">Enabled</mat-slide-toggle>
+      </header>
+      <button type="button" mat-mini-fab (click)="form.controls.circles.removeAt(circleIndex)">
+        <mat-icon>delete</mat-icon>
       </button>
-      }
+
+      <mat-form-field>
+        <mat-label>radius of circle</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="radius"
+          placeholder="Radius"
+          [min]="circleFormSettings.radius.min"
+          [max]="circleFormSettings.radius.max" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>line width in px</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="strokeWidth"
+          placeholder="Stroke width"
+          [min]="circleFormSettings.strokeWidth.min"
+          [max]="circleFormSettings.strokeWidth.max" />
+      </mat-form-field>
     </div>
   </ng-container>
 </ng-template>

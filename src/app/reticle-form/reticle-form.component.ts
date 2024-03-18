@@ -4,7 +4,7 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } fr
 import { Observable, debounceTime, filter, map, startWith } from 'rxjs';
 import { AutoForm } from '../form.types';
 import { MaterialModule } from '../material.module';
-import { AxisMarkerType, AxisType, ReticleType } from '../reticle.types';
+import { AxisMarkerType, AxisType, CircleType, ReticleType } from '../reticle.types';
 
 export type NumberFormElementSettings<T> = {
   [P in keyof T]: {
@@ -29,6 +29,11 @@ export class ReticleFormComponent {
     strokeWidth: { default: 3, min: 1, max: 20 },
   };
 
+  readonly circleFormSettings: NumberFormElementSettings<Omit<CircleType, 'enabled'>> = {
+    radius: { default: 256, min: 0, max: 1000 },
+    strokeWidth: { default: 3, min: 1, max: 20 },
+  };
+
   readonly axisMarkerFormSettings: NumberFormElementSettings<Omit<AxisMarkerType, 'enabled'>> = {
     count: { default: 0, min: 0, max: 10 },
     gap: { default: 20, min: 1, max: 100 },
@@ -43,6 +48,7 @@ export class ReticleFormComponent {
       nonNullable: true,
     }),
     axis: new FormArray<AutoForm<AxisType>>([]),
+    circles: new FormArray<AutoForm<CircleType>>([]),
   });
 
   readonly valueChanges: Observable<ReticleType> = this.form.valueChanges.pipe(
@@ -134,6 +140,32 @@ export class ReticleFormComponent {
         validators: [
           Validators.min(this.axisMarkerFormSettings.strokeWidth.min),
           Validators.max(this.axisMarkerFormSettings.strokeWidth.max),
+        ],
+        nonNullable: true,
+      }),
+    });
+
+    if (value) {
+      fg.patchValue(value);
+    }
+
+    return fg;
+  }
+
+  getCircleForm(value?: CircleType): AutoForm<CircleType> {
+    const fg: AutoForm<CircleType> = new FormGroup({
+      enabled: new FormControl<boolean>(true, { nonNullable: true }),
+      radius: new FormControl<number>(this.circleFormSettings.radius.default, {
+        validators: [
+          Validators.min(this.circleFormSettings.radius.min),
+          Validators.max(this.circleFormSettings.radius.max),
+        ],
+        nonNullable: true,
+      }),
+      strokeWidth: new FormControl<number>(this.circleFormSettings.strokeWidth.default, {
+        validators: [
+          Validators.min(this.circleFormSettings.strokeWidth.min),
+          Validators.max(this.circleFormSettings.strokeWidth.max),
         ],
         nonNullable: true,
       }),

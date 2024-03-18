@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReticleFormComponent } from './reticle-form.component';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AxisType } from '../reticle.types';
+import { AxisMarkerType, AxisType, CircleType } from '../reticle.types';
+import { ReticleFormComponent } from './reticle-form.component';
 
 describe('ReticleFormComponent', () => {
   let component: ReticleFormComponent;
@@ -35,7 +35,7 @@ describe('ReticleFormComponent', () => {
     expect(component.form.controls.axis).toBeInstanceOf(FormArray);
   });
 
-  describe('getAxisForm & getAxisMarkerForm', () => {
+  describe('getAxisForm', () => {
     it(`should return a FormGroup`, () => {
       expect(component.getAxisForm()).toBeInstanceOf(FormGroup);
     });
@@ -60,6 +60,41 @@ describe('ReticleFormComponent', () => {
       };
       const axis = component.getAxisForm(testData);
       expect(axis.value).toEqual(testData);
+    });
+  });
+
+  describe('getAxisMarkerForm', () => {
+    it(`should return a FormGroup`, () => {
+      expect(component.getAxisMarkerForm()).toBeInstanceOf(FormGroup);
+    });
+
+    it(`should return a FormGroup with data`, () => {
+      const testData: AxisMarkerType = {
+        enabled: true,
+        count: 4,
+        gap: 2,
+        offset: 0,
+        length: 20,
+        strokeWidth: 10,
+      };
+      const axisMarker = component.getAxisMarkerForm(testData);
+      expect(axisMarker.value).toEqual(testData);
+    });
+  });
+
+  describe('getCircleForm', () => {
+    it(`should return a FormGroup`, () => {
+      expect(component.getCircleForm()).toBeInstanceOf(FormGroup);
+    });
+
+    it(`should return a FormGroup with data`, () => {
+      const testData: CircleType = {
+        enabled: true,
+        radius: 200,
+        strokeWidth: 3,
+      };
+      const circle = component.getCircleForm(testData);
+      expect(circle.value).toEqual(testData);
     });
   });
 });

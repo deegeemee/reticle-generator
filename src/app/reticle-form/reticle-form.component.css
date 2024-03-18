@@ -36,6 +36,7 @@ form {
       grid-column: span 4;
     }
     
+    margin-left: 15%;
     grid-column: span 4;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -47,7 +48,20 @@ form {
     }
   }
 
-  .form-axis-marker, .form-axis-marker+button {
-    margin-left: 15%;
+  .form-circle {
+    header {
+      grid-column: span 3;
+    }
+
+    grid-column: span 4;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1rem;
+    align-items: center;
+
+    .mat-mdc-mini-fab {
+      justify-self: end;
+    }
   }
+
 }
