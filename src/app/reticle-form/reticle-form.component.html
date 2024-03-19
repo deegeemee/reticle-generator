@@ -4,6 +4,15 @@
     <input type="number" matInput formControlName="size" placeholder="Name" />
   </mat-form-field>
 
+  <a
+    type="button"
+    mat-flat-button
+    (click)="downloadButtonClicked.emit($event)"
+    (keyup.enter)="downloadButtonClicked.emit($event)"
+    download="reticle.png"
+    >Download PNG</a
+  >
+
   @for (axis of form.controls.axis.controls; track $index) {
   <ng-container *ngTemplateOutlet="axisForm; context: { form, axisIndex: $index }"></ng-container>
   <mat-divider></mat-divider>

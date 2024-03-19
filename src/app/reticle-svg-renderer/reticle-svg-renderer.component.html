@@ -1,5 +1,5 @@
 @if (reticle$ | async; as reticle) {
-<svg [attr.viewBox]="'0 0 ' + reticle.size + ' ' + reticle.size" xmlns="http://www.w3.org/2000/svg">
+<svg id="reticleSvg" [attr.viewBox]="'0 0 ' + reticle.size + ' ' + reticle.size" xmlns="http://www.w3.org/2000/svg">
   @for (axis of reticle.axis; track $index) { @if (axis.enabled) {
   <ng-container *ngTemplateOutlet="svgAxis; context: { reticle, axis }"></ng-container>
   } } @for (circle of reticle.circles; track $index) { @if (circle.enabled) {

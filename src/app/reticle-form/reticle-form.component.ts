@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, debounceTime, filter, map, startWith } from 'rxjs';
 import { AutoForm } from '../form.types';
@@ -21,7 +21,10 @@ export type NumberFormElementSettings<T> = {
   templateUrl: './reticle-form.component.html',
   styleUrl: './reticle-form.component.css',
 })
-export class ReticleFormComponent {
+export class ReticleFormComponent implements OnInit {
+  @Output()
+  readonly downloadButtonClicked = new EventEmitter<Event>();
+
   readonly axisFormSettings: NumberFormElementSettings<Omit<AxisType, 'markers' | 'enabled'>> = {
     angle: { default: 0, min: 0, max: 360 },
     offsetStart: { default: 256, min: 0, max: 512 },
@@ -59,11 +62,19 @@ export class ReticleFormComponent {
     map(() => this.form.getRawValue() as ReticleType)
   );
 
+  ngOnInit(): void {
+    this.form.controls.axis.setControl(0, this.getAxisForm());
+    this.form.controls.axis.at(0).controls.markers.setControl(0, this.getAxisMarkerForm());
+    this.form.controls.axis.setControl(1, this.getAxisForm({ angle: 90 }));
+    this.form.controls.axis.at(1).controls.markers.setControl(0, this.getAxisMarkerForm());
+    this.form.controls.circles.setControl(0, this.getCircleForm());
+  }
+
   /**
    * Return for group for an axis
    * @returns FormGroup<AxisFormType>
    */
-  getAxisForm(value?: AxisType): AutoForm<AxisType> {
+  getAxisForm(value?: Partial<AxisType>): AutoForm<AxisType> {
     const fg: AutoForm<AxisType> = new FormGroup({
       enabled: new FormControl<boolean>(true, { nonNullable: true }),
       angle: new FormControl<number>(this.axisFormSettings.angle.default, {
@@ -105,7 +116,7 @@ export class ReticleFormComponent {
    * Return for group for an axis marker
    * @returns FormGroup<AxisMarkerFormType>
    */
-  getAxisMarkerForm(value?: AxisMarkerType): AutoForm<AxisMarkerType> {
+  getAxisMarkerForm(value?: Partial<AxisMarkerType>): AutoForm<AxisMarkerType> {
     const fg: AutoForm<AxisMarkerType> = new FormGroup({
       enabled: new FormControl<boolean>(true, { nonNullable: true }),
       count: new FormControl<number>(this.axisMarkerFormSettings.count.default, {
@@ -152,7 +163,7 @@ export class ReticleFormComponent {
     return fg;
   }
 
-  getCircleForm(value?: CircleType): AutoForm<CircleType> {
+  getCircleForm(value?: Partial<CircleType>): AutoForm<CircleType> {
     const fg: AutoForm<CircleType> = new FormGroup({
       enabled: new FormControl<boolean>(true, { nonNullable: true }),
       radius: new FormControl<number>(this.circleFormSettings.radius.default, {

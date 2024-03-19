@@ -30,3 +30,7 @@ header {
   }
 
 }
+
+canvas {
+  display: none;
+}
