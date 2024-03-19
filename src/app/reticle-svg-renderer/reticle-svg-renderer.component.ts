@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AxisMarkerType, AxisType, ReticleType } from '../reticle.types';
 import { CommonModule } from '@angular/common';
@@ -26,6 +26,12 @@ type MarkerLineId = MarkerLine & {
 export class ReticleSvgRendererComponent {
   @Input({ required: true })
   reticle$!: Observable<ReticleType>;
+
+  constructor(readonly elementRef: ElementRef) {}
+
+  get svgMarkup() {
+    return this.elementRef.nativeElement.firstChild?.outerHTML;
+  }
 
   getAxisMarkers(reticle: ReticleType, axis: AxisType, marker: AxisMarkerType): MarkerLineId[] {
     const center = reticle.size / 2;

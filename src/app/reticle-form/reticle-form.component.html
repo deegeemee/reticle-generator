@@ -4,21 +4,15 @@
     <input type="number" matInput formControlName="size" placeholder="Name" />
   </mat-form-field>
 
-  <a
+  @if(reticleHasContent$ | async) {
+  <button
     type="button"
     mat-flat-button
-    (click)="downloadButtonClicked.emit($event)"
-    (keyup.enter)="downloadButtonClicked.emit($event)"
-    download="reticle.png"
-    >Download PNG</a
-  >
+    (click)="downloadButtonClicked.emit($any(form.value))"
+    (keyup.enter)="downloadButtonClicked.emit($any(form.value))">
+    Download PNG
+  </button>
 
-  @for (axis of form.controls.axis.controls; track $index) {
-  <ng-container *ngTemplateOutlet="axisForm; context: { form, axisIndex: $index }"></ng-container>
-  <mat-divider></mat-divider>
-  } @for (circle of form.controls.circles.controls; track $index) {
-  <ng-container *ngTemplateOutlet="circleForm; context: { form, circleIndex: $index }"></ng-container>
-  <mat-divider></mat-divider>
   }
 
   <button
@@ -28,6 +22,14 @@
     Add axis
   </button>
   <button type="button" mat-flat-button (click)="form.controls.circles.insert(-1, getCircleForm())">Add circle</button>
+
+  @for (axis of form.controls.axis.controls; track $index) {
+  <ng-container *ngTemplateOutlet="axisForm; context: { form, axisIndex: $index }"></ng-container>
+  <mat-divider></mat-divider>
+  } @for (circle of form.controls.circles.controls; track $index) {
+  <ng-container *ngTemplateOutlet="circleForm; context: { form, circleIndex: $index }"></ng-container>
+  <mat-divider></mat-divider>
+  }
 </form>
 
 <ng-template #axisForm let-form="form" let-axisIndex="axisIndex">

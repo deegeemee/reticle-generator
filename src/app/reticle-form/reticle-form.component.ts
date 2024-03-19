@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable, debounceTime, filter, map, startWith } from 'rxjs';
+import { Observable, debounceTime, filter, map, share, startWith } from 'rxjs';
 import { AutoForm } from '../form.types';
 import { MaterialModule } from '../material.module';
 import { AxisMarkerType, AxisType, CircleType, ReticleType } from '../reticle.types';
@@ -23,7 +23,7 @@ export type NumberFormElementSettings<T> = {
 })
 export class ReticleFormComponent implements OnInit {
   @Output()
-  readonly downloadButtonClicked = new EventEmitter<Event>();
+  readonly downloadButtonClicked = new EventEmitter<ReticleType>();
 
   readonly axisFormSettings: NumberFormElementSettings<Omit<AxisType, 'markers' | 'enabled'>> = {
     angle: { default: 0, min: 0, max: 360 },
@@ -53,6 +53,16 @@ export class ReticleFormComponent implements OnInit {
     axis: new FormArray<AutoForm<AxisType>>([]),
     circles: new FormArray<AutoForm<CircleType>>([]),
   });
+
+  reticleHasContent$ = this.form.valueChanges.pipe(
+    startWith(this.form.value),
+    map(() => {
+      return (
+        this.form.value.axis?.some(axis => axis.enabled) || this.form.value.circles?.some(circle => circle.enabled)
+      );
+    }),
+    share()
+  );
 
   readonly valueChanges: Observable<ReticleType> = this.form.valueChanges.pipe(
     filter(() => this.form.valid),

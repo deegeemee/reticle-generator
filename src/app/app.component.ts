@@ -5,6 +5,7 @@ import { catchError, map, of } from 'rxjs';
 import { ReticleFormComponent } from './reticle-form/reticle-form.component';
 import { ReticleSvgRendererComponent } from './reticle-svg-renderer/reticle-svg-renderer.component';
 import { SocialBarComponent } from './social-bar/social-bar.component';
+import { ReticleType } from './reticle.types';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,9 @@ export class AppComponent {
   @ViewChild('canvas', { static: true })
   readonly canvas!: ElementRef<HTMLCanvasElement>;
 
+  @ViewChild('svgRenderer', { static: true })
+  readonly svgRenderer!: ReticleSvgRendererComponent;
+
   version$ = this.http.request('GET', '/assets/version', { responseType: 'text' }).pipe(
     catchError(() => of('unknown')),
     map(version => version.trim())
@@ -26,9 +30,8 @@ export class AppComponent {
 
   constructor(readonly http: HttpClient) {}
 
-  onDownload(ev: Event) {
-    const canvas = this.canvas.nativeElement;
-    const svgElem = document.getElementById('reticleSvg');
+  onDownloadReticle(reticle: ReticleType, svgRenderer: ReticleSvgRendererComponent) {
+    const canvas = new OffscreenCanvas(reticle.size, reticle.size);
     const ctx = canvas.getContext('2d');
 
     if (!ctx) {
@@ -36,24 +39,35 @@ export class AppComponent {
       return;
     }
 
-    ev.stopImmediatePropagation();
+    const imageElement: HTMLImageElement = new Image(reticle.size, reticle.size);
+    const svgBlob = new Blob([svgRenderer.svgMarkup], { type: 'image/svg+xml' });
+    const svgBlobUrl = URL.createObjectURL(svgBlob);
 
-    const DOMURL = window.URL || window.webkitURL || window;
+    // When the image is loaded, draw it to the canvas
+    imageElement.onload = () => {
+      ctx.drawImage(imageElement, 0, 0);
+      URL.revokeObjectURL(svgBlobUrl);
 
-    const img = new Image(1024, 1024);
-    const svg = new Blob([svgElem!.outerHTML], { type: 'image/svg+xml' });
-    const url = DOMURL.createObjectURL(svg);
+      // Convert the canvas to blob and download it via newly created link element
+      canvas.convertToBlob({ type: 'image/png' }).then(canvasBlob => {
+        const canvasBlobUrl = URL.createObjectURL(canvasBlob);
 
-    img.onload = function () {
-      ctx.drawImage(img, 0, 0);
-      DOMURL.revokeObjectURL(url);
-      const dataUrl = canvas.toDataURL('image/png');
-      const linkElem = (ev.target as HTMLElement).parentElement as HTMLLinkElement;
-      linkElem.href = dataUrl;
-      
+        const linkElement = document.createElement('a');
+        linkElement.style.display = 'none';
+        linkElement.href = canvasBlobUrl;
+        linkElement.download = 'reticle.png';
+        document.body.appendChild(linkElement);
+        linkElement.click();
+
+        // Clean up the link element and blob url
+        setTimeout(() => {
+          URL.revokeObjectURL(linkElement.href);
+          document.body.removeChild(linkElement);
+        });
+      });
     };
 
-
-    img.src = url;
+    // Kick off the image loading
+    imageElement.src = svgBlobUrl;
   }
 }

@@ -1,4 +1,4 @@
-<app-reticle-svg-renderer [reticle$]="formComponent.valueChanges"></app-reticle-svg-renderer>
+<app-reticle-svg-renderer #svgRenderer [reticle$]="formComponent.valueChanges"></app-reticle-svg-renderer>
 
 <header>
   <app-social-bar></app-social-bar>
@@ -8,6 +8,4 @@
   </div>
 </header>
 
-<app-reticle-form #formComponent (downloadButtonClicked)="onDownload($event)"></app-reticle-form>
-
-<canvas #canvas width="1024px" height="1024px"></canvas>
+<app-reticle-form #formComponent (downloadButtonClicked)="onDownloadReticle($event, svgRenderer)"></app-reticle-form>

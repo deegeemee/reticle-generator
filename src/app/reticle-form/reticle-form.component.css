@@ -10,11 +10,6 @@ form {
     grid-column: span 4;
   }
 
-  /* Adjust button if no axis in form */
-  >mat-form-field + button {
-    grid-column: 1 / 2;
-  }
-
   .form-axis {
     header {
       grid-column: span 3;
