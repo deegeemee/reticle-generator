@@ -4,6 +4,15 @@
     <input type="number" matInput formControlName="size" placeholder="Name" />
   </mat-form-field>
 
+  <button
+    type="button"
+    mat-flat-button
+    (click)="form.controls.axis.insert(form.controls.axis.controls.length, getAxisForm())">
+    Add axis
+  </button>
+
+  <button type="button" mat-flat-button (click)="form.controls.circles.insert(-1, getCircleForm())">Add circle</button>
+
   @if(reticleHasContent$ | async) {
   <button
     type="button"
@@ -12,18 +21,7 @@
     (keyup.enter)="downloadButtonClicked.emit($any(form.value))">
     Download PNG
   </button>
-
-  }
-
-  <button
-    type="button"
-    mat-flat-button
-    (click)="form.controls.axis.insert(form.controls.axis.controls.length, getAxisForm())">
-    Add axis
-  </button>
-  <button type="button" mat-flat-button (click)="form.controls.circles.insert(-1, getCircleForm())">Add circle</button>
-
-  @for (axis of form.controls.axis.controls; track $index) {
+  } @for (axis of form.controls.axis.controls; track $index) {
   <ng-container *ngTemplateOutlet="axisForm; context: { form, axisIndex: $index }"></ng-container>
   <mat-divider></mat-divider>
   } @for (circle of form.controls.circles.controls; track $index) {
