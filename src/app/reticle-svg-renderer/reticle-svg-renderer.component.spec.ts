@@ -27,119 +27,138 @@ describe('ReticleSvgRendererComponent', () => {
       const reticle = { size: 1024 } as ReticleType;
       const axis = { offsetStart: 0, offsetEnd: 0 } as AxisType;
       const marker = { enabled: false, gap: 0, length: 0, offset: 0, strokeWidth: 0 } as AxisMarkerType;
-      expect(component.getAxisMarkers(reticle, axis, marker)).toEqual([]);
+      expect(component.getAxisMarkerLines(reticle, axis, marker)).toEqual([]);
     });
 
     it('should return an empty array if the marker gap is 0', () => {
       const reticle = { size: 1024 } as ReticleType;
       const axis = { offsetStart: 0, offsetEnd: 0 } as AxisType;
       const marker = { enabled: true, gap: 0, length: 0, offset: 0, strokeWidth: 0 } as AxisMarkerType;
-      expect(component.getAxisMarkers(reticle, axis, marker)).toEqual([]);
+      expect(component.getAxisMarkerLines(reticle, axis, marker)).toEqual([]);
     });
 
     it('should return an array of marker lines', () => {
       const reticle = { size: 1024 } as ReticleType;
       const axis = { offsetStart: 0, offsetEnd: 0, angle: 0 } as AxisType;
-      const marker = { enabled: true, gap: 100, length: 20, offset: -10, strokeWidth: 1 } as AxisMarkerType;
-      expect(component.getAxisMarkers(reticle, axis, marker)).toEqual([
+      const marker = {
+        enabled: true,
+        gap: 100,
+        maxCount: 4,
+        length: 20,
+        offset: -10,
+        strokeWidth: 1,
+        color: '#000000',
+      } as AxisMarkerType;
+
+      const result = component.getAxisMarkerLines(reticle, axis, marker);
+      expect(result).toEqual([
         {
           y1: 522,
           y2: 502,
           stokeWidth: 1,
-          stroke: 'black',
+          color: '#000000',
           x1: 612,
           x2: 612,
+          textX: 606,
+          textY: 522,
+          renderNumber: '1',
           id: 'axis-0-marker-0-line-612-522-612-502',
         },
         {
           y1: 522,
           y2: 502,
           stokeWidth: 1,
-          stroke: 'black',
+          color: '#000000',
           x1: 712,
           x2: 712,
+          textX: 706,
+          textY: 522,
+          renderNumber: '2',
           id: 'axis-0-marker-1-line-712-522-712-502',
         },
         {
           y1: 522,
           y2: 502,
           stokeWidth: 1,
-          stroke: 'black',
+          color: '#000000',
           x1: 812,
           x2: 812,
+          textX: 806,
+          textY: 522,
+          renderNumber: '3',
           id: 'axis-0-marker-2-line-812-522-812-502',
         },
         {
           y1: 522,
           y2: 502,
           stokeWidth: 1,
-          stroke: 'black',
+          color: '#000000',
           x1: 912,
           x2: 912,
+          textX: 906,
+          textY: 522,
+          renderNumber: '4',
           id: 'axis-0-marker-3-line-912-522-912-502',
         },
         {
           y1: 522,
           y2: 502,
           stokeWidth: 1,
-          stroke: 'black',
-          x1: 1012,
-          x2: 1012,
-          id: 'axis-0-marker-4-line-1012-522-1012-502',
-        },
-        {
-          y1: 522,
-          y2: 502,
-          stokeWidth: 1,
-          stroke: 'black',
+          color: '#000000',
           x1: 512,
           x2: 512,
-          id: 'axis-0-marker-5-line-512-522-512-502',
+          textX: 506,
+          textY: 522,
+          renderNumber: '',
+          id: 'axis-0-marker-4-line-512-522-512-502',
         },
         {
           y1: 522,
           y2: 502,
           stokeWidth: 1,
-          stroke: 'black',
+          color: '#000000',
           x1: 412,
           x2: 412,
-          id: 'axis-0-marker-6-line-412-522-412-502',
+          textX: 406,
+          textY: 522,
+          renderNumber: '1',
+          id: 'axis-0-marker-5-line-412-522-412-502',
         },
         {
           y1: 522,
           y2: 502,
           stokeWidth: 1,
-          stroke: 'black',
+          color: '#000000',
           x1: 312,
           x2: 312,
-          id: 'axis-0-marker-7-line-312-522-312-502',
+          textX: 306,
+          textY: 522,
+          renderNumber: '2',
+          id: 'axis-0-marker-6-line-312-522-312-502',
         },
         {
           y1: 522,
           y2: 502,
           stokeWidth: 1,
-          stroke: 'black',
+          color: '#000000',
           x1: 212,
           x2: 212,
-          id: 'axis-0-marker-8-line-212-522-212-502',
+          textX: 206,
+          textY: 522,
+          renderNumber: '3',
+          id: 'axis-0-marker-7-line-212-522-212-502',
         },
         {
           y1: 522,
           y2: 502,
           stokeWidth: 1,
-          stroke: 'black',
+          color: '#000000',
           x1: 112,
           x2: 112,
-          id: 'axis-0-marker-9-line-112-522-112-502',
-        },
-        {
-          y1: 522,
-          y2: 502,
-          stokeWidth: 1,
-          stroke: 'black',
-          x1: 12,
-          x2: 12,
-          id: 'axis-0-marker-10-line-12-522-12-502',
+          textX: 106,
+          textY: 522,
+          renderNumber: '4',
+          id: 'axis-0-marker-8-line-112-522-112-502',
         },
       ]);
     });

@@ -47,14 +47,17 @@ describe('ReticleFormComponent', () => {
         offsetStart: 256,
         offsetEnd: 256,
         strokeWidth: 3,
+        color: '#000000',
         markers: [
           {
             enabled: true,
-            count: 4,
+            maxCount: 4,
             gap: 2,
             offset: 0,
             strokeWidth: 10,
             length: 20,
+            numbered: true,
+            color: '#000000',
           },
         ],
       };
@@ -71,11 +74,13 @@ describe('ReticleFormComponent', () => {
     it(`should return a FormGroup with data`, () => {
       const testData: AxisMarkerType = {
         enabled: true,
-        count: 4,
+        maxCount: 4,
         gap: 2,
         offset: 0,
         length: 20,
         strokeWidth: 10,
+        numbered: true,
+        color: '#000000',
       };
       const axisMarker = component.getAxisMarkerForm(testData);
       expect(axisMarker.value).toEqual(testData);
@@ -92,6 +97,7 @@ describe('ReticleFormComponent', () => {
         enabled: true,
         radius: 200,
         strokeWidth: 3,
+        color: '#000000',
       };
       const circle = component.getCircleForm(testData);
       expect(circle.value).toEqual(testData);

@@ -6,11 +6,13 @@ export type ReticleType = {
 
 export type AxisMarkerType = {
   enabled: boolean;
-  count: number;
+  maxCount: number;
   gap: number;
   offset: number;
   length: number;
   strokeWidth: number;
+  numbered: boolean;
+  color: string;
 };
 
 export type AxisType = {
@@ -20,10 +22,12 @@ export type AxisType = {
   offsetStart: number;
   offsetEnd: number;
   markers: AxisMarkerType[];
+  color: string;
 };
 
 export type CircleType = {
   enabled: boolean;
   radius: number;
   strokeWidth: number;
+  color: string;
 };

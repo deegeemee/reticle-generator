@@ -10,14 +10,19 @@ form {
     grid-column: span 4;
   }
 
+  mat-slide-toggle+mat-slide-toggle {
+    margin-left: 1rem;
+  }
+
   .form-axis {
+    grid-column: span 4;
+
     header {
-      grid-column: span 3;
+      grid-column: span 4;
     }
 
-    grid-column: span 4;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-gap: 1rem;
     align-items: center;
 
@@ -27,14 +32,15 @@ form {
   }
 
   .form-axis-marker {
+    grid-column: span 4;
+    margin-left: 15%;
+
     header {
-      grid-column: span 4;
+      grid-column: span 5;
     }
     
-    margin-left: 15%;
-    grid-column: span 4;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-gap: 1rem;
     align-items: center;
 

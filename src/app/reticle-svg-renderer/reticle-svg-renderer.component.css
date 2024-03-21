@@ -6,3 +6,9 @@
   justify-content: center;
   background-color: var(--mdc-theme-surface);
 }
+
+.marker-number {
+  font-size: 20px;
+  line-height: 20px;
+  white-space: nowrap;
+}

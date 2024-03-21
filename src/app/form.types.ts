@@ -6,3 +6,15 @@ export type AutoForm<T> = [T] extends [boolean | number | string | null | undefi
   : [T] extends [(infer U)[]]
   ? FormArray<AutoForm<U>>
   : FormGroup<AutoFormControls<T>>;
+
+export type FormSettings<T> = {
+  [P in keyof T]: T[P] extends number
+    ? {
+        default: T[P];
+        min: number;
+        max: number;
+      }
+    : {
+        default: T[P];
+      };
+};

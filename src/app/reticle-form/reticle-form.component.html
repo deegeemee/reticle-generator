@@ -1,6 +1,6 @@
 <form [formGroup]="form">
   <mat-form-field>
-    <mat-label>svg image size</mat-label>
+    <mat-label>image size</mat-label>
     <input type="number" matInput formControlName="size" placeholder="Name" />
   </mat-form-field>
 
@@ -44,6 +44,11 @@
       <button type="button" mat-mini-fab (click)="form.controls.axis.removeAt(axisIndex)">
         <mat-icon>delete</mat-icon>
       </button>
+
+      <mat-form-field>
+        <mat-label>color</mat-label>
+        <input type="color" matInput formControlName="color" placeholder="Color" />
+      </mat-form-field>
 
       <mat-form-field>
         <mat-label>angle of axis</mat-label>
@@ -106,20 +111,26 @@
       <header>
         <h3>Axis {{ axisIndex + 1 }} - Marker {{ markerIndex + 1 }}</h3>
         <mat-slide-toggle formControlName="enabled">Enabled</mat-slide-toggle>
+        <mat-slide-toggle formControlName="numbered">Show numbers</mat-slide-toggle>
       </header>
       <button type="button" mat-mini-fab (click)="axisForm.controls.markers.removeAt(markerIndex)">
         <mat-icon>delete</mat-icon>
       </button>
 
       <mat-form-field>
-        <mat-label>count</mat-label>
+        <mat-label>color</mat-label>
+        <input type="color" matInput formControlName="color" placeholder="Color" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>max count (0 to disable)</mat-label>
         <input
           type="number"
           matInput
-          formControlName="count"
+          formControlName="maxCount"
           placeholder="Count"
-          [min]="axisMarkerFormSettings.count.min"
-          [max]="axisMarkerFormSettings.count.max" />
+          [min]="axisMarkerFormSettings.maxCount.min"
+          [max]="axisMarkerFormSettings.maxCount.max" />
       </mat-form-field>
 
       <mat-form-field>
@@ -179,6 +190,11 @@
       <button type="button" mat-mini-fab (click)="form.controls.circles.removeAt(circleIndex)">
         <mat-icon>delete</mat-icon>
       </button>
+
+      <mat-form-field>
+        <mat-label>color</mat-label>
+        <input type="color" matInput formControlName="color" placeholder="Color" />
+      </mat-form-field>
 
       <mat-form-field>
         <mat-label>radius of circle</mat-label>
