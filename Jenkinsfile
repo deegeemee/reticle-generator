@@ -69,7 +69,7 @@ pipeline {
             }
             steps {
               sshagent(['PLESK_RSYNC_SSH_DEEGEEMEE']) {
-                sh 'rsync -av --delete --exclude .well-known -e "ssh -o StrictHostKeyChecking=no" dist/browser/ deegeemee@deegeemee.net:~/reticle-generator.deegeemee.net/'
+                sh "rsync -av --delete --exclude .well-known -e 'ssh -o StrictHostKeyChecking=no' dist/reticle-generator/browser/ deegeemee@deegeemee.net:~/reticle-generator.deegeemee.net/"
               }         
             }
         }
