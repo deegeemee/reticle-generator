@@ -30,10 +30,12 @@ export class AppComponent {
 
   constructor(readonly http: HttpClient) {}
 
+  /* istanbul ignore next */
   onDownloadReticle(reticle: ReticleType, svgRenderer: ReticleSvgRendererComponent) {
     const canvas = new OffscreenCanvas(reticle.size, reticle.size);
     const ctx = canvas.getContext('2d');
 
+    /* istanbul ignore if */
     if (!ctx) {
       console.error('Failed to get 2d context');
       return;

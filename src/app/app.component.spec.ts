@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { ReticleFormComponent } from './reticle-form/reticle-form.component';
 import { ReticleSvgRendererComponent } from './reticle-svg-renderer/reticle-svg-renderer.component';
+import { ReticleType } from './reticle.types';
 
 describe('AppComponent', () => {
   // The fixture of the component
@@ -35,7 +36,7 @@ describe('AppComponent', () => {
     expect(ci.title).toEqual('reticle-generator');
   });
 
-  it(`should a ReticleSvgRendererComponent component`, () => {
+  it(`should have a ReticleSvgRendererComponent component`, () => {
     expect(de.query(By.directive(ReticleSvgRendererComponent))).toBeTruthy();
   });
 
@@ -43,7 +44,42 @@ describe('AppComponent', () => {
     expect(de.query(By.css('header'))).toBeTruthy();
   });
 
-  it(`should have ReticleFormComponent`, () => {
+  it(`should have a ReticleFormComponent`, () => {
     expect(de.query(By.directive(ReticleFormComponent))).toBeTruthy();
+  });
+
+  describe('onDownloadReticle', () => {
+    beforeEach(async () => {
+      const fakeContext2d = {
+        drawImage: jest.fn(),
+      };
+
+      window.OffscreenCanvas = jest.fn().mockImplementation((width: number, height: number) => {
+        return {
+          height,
+          width,
+          oncontextlost: jest.fn(),
+          oncontextrestored: jest.fn(),
+          getContext: jest.fn(() => fakeContext2d),
+          convertToBlob: jest.fn(),
+          transferToImageBitmap: jest.fn(),
+          addEventListener: jest.fn(),
+          removeEventListener: jest.fn(),
+          dispatchEvent: jest.fn(),
+        } as unknown as OffscreenCanvas;
+      });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).URL = {
+        createObjectURL: jest.fn(),
+        revokeObjectURL: jest.fn(),
+      } as unknown as URL;
+    });
+    it('should render the svg and trigger the download', done => {
+      jest.spyOn(ci.svgRenderer, 'svgMarkup', 'get').mockReturnValue('<svg></svg>');
+      ci.onDownloadReticle({ size: 1024 } as ReticleType, ci.svgRenderer);
+      expect(window.URL.createObjectURL).toHaveBeenCalled();
+      done();
+    });
   });
 });
