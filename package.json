@@ -6,13 +6,17 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "dev": "npm start",
     "devcheck": "npm test --watch-all=false --coverage false && npm run lint && npm run stylelint",
     "test": "ng test --",
     "test:watch": "ng test --watch --coverage false --",
     "lint": "ng lint",
-    "stylelint": "stylelint \"**/*.{css,scss}\""
+    "stylelint": "stylelint \"**/*.{css,scss}\"",
+    "clean:coverage": "rimraf coverage",
+    "clean:dist": "rimraf dist",
+    "clean": "npm run clean:coverage && npm run clean:dist"
   },
   "pre-commit": [
     "devcheck"
