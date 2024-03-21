@@ -36,8 +36,6 @@ export class ReticleSvgRendererComponent {
   getAxisMarkers(reticle: ReticleType, axis: AxisType, marker: AxisMarkerType): MarkerLineId[] {
     const center = reticle.size / 2;
 
-    marker.gap = marker.gap ?? 0;
-
     if (!marker.enabled || !marker.gap) {
       return [];
     }
@@ -51,8 +49,8 @@ export class ReticleSvgRendererComponent {
       stroke: 'black',
     };
 
-    let curDistance = center;
-    while (curDistance <= center + axis.offsetEnd) {
+    let curDistance = center + marker.gap;
+    while (curDistance <= reticle.size - axis.offsetEnd) {
       lines.push({
         ...line,
         x1: curDistance,
@@ -62,7 +60,7 @@ export class ReticleSvgRendererComponent {
     }
 
     curDistance = center;
-    while (curDistance >= center - axis.offsetStart) {
+    while (curDistance >= axis.offsetStart) {
       lines.push({
         ...line,
         x1: curDistance,
@@ -70,9 +68,12 @@ export class ReticleSvgRendererComponent {
       });
       curDistance -= marker.gap;
     }
-    return lines.map((line, i) => ({
+
+    const ret = lines.map((line, i) => ({
       ...line,
       id: `axis-${axis.angle}-marker-${i}-line-${line.x1}-${line.y1}-${line.x2}-${line.y2}`,
     }));
+
+    return ret;
   }
 }

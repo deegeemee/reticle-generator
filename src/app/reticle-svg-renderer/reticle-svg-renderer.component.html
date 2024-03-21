@@ -11,7 +11,7 @@
 <ng-template #svgAxis let-reticle="reticle" let-axis="axis">
   <svg:g [attr.transform]="'rotate(' + axis.angle + ' ' + reticle.size / 2 + ' ' + reticle.size / 2 + ')'">
     <ng-container *ngTemplateOutlet="svgAxisLine; context: { reticle, axis }"></ng-container>
-    @for (marker of axis.markers; track $index) {
+    @for (marker of axis.markers; track marker.id) {
     <ng-container *ngTemplateOutlet="svgAxisMarkers; context: { reticle, axis, marker }"></ng-container>
     }
   </svg:g>
