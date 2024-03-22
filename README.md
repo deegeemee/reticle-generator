@@ -16,7 +16,7 @@ This generator provides the flexibility to design reticles with custom axis, mar
 
 ## Getting Started:
 
-To start using the Reticle Generator, simply [visit our online tool](https://reticle-generator.deegeemee.net) and begin crafting your reticle with ease.
+To start using the Reticle Generator, simply visit [https://reticle-generator.deegeemee.net](https://reticle-generator.deegeemee.net) and begin crafting your reticle with ease.
 
 ## How to Use:
 
