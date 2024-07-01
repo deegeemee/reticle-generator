@@ -6,6 +6,7 @@ import { ReticleFormComponent } from './reticle-form/reticle-form.component';
 import { ReticleSvgRendererComponent } from './reticle-svg-renderer/reticle-svg-renderer.component';
 import { SocialBarComponent } from './social-bar/social-bar.component';
 import { ReticleType } from './reticle.types';
+import posthog from 'posthog-js';
 
 @Component({
   selector: 'app-root',
@@ -65,6 +66,7 @@ export class AppComponent {
         setTimeout(() => {
           URL.revokeObjectURL(linkElement.href);
           document.body.removeChild(linkElement);
+          posthog.capture('reticle downloaded', { size: reticle.size });
         });
       });
     };
