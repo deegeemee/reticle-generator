@@ -1,0 +1,36 @@
+:host {
+  display: grid;
+  grid-template-columns: 5fr 5fr;
+  grid-template-rows: max-content 1fr;
+}
+
+header, app-reticle-form {
+  background-color: #6b6b6b;
+  overflow: hidden auto;
+}
+
+app-reticle-svg-renderer {
+  grid-row: span 2;
+}
+
+header {
+  padding: 0.5rem 1rem;
+  color: white;
+  background-color: var(--mdc-filled-text-field-container-color);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+
+  h5 {
+    opacity: 0.5;
+  }
+
+  .title {
+    justify-self: end;
+  }
+
+}
+
+canvas {
+  display: none;
+}

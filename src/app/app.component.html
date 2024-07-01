@@ -1,0 +1,11 @@
+<app-reticle-svg-renderer #svgRenderer [reticle$]="formComponent.validValueChanges"></app-reticle-svg-renderer>
+
+<header>
+  <app-social-bar></app-social-bar>
+  <div class="title">
+    <h1>{{ title }}</h1>
+    <h5>version {{ version$ | async }} by deegeemee</h5>
+  </div>
+</header>
+
+<app-reticle-form #formComponent (downloadButtonClicked)="onDownloadReticle($event, svgRenderer)"></app-reticle-form>

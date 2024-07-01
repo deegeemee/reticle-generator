@@ -1,0 +1,59 @@
+@if (reticle$ | async; as reticle) {
+<svg id="reticleSvg" [attr.viewBox]="'0 0 ' + reticle.size + ' ' + reticle.size" xmlns="http://www.w3.org/2000/svg">
+  @for (axis of reticle.axis; track $index) { @if (axis.enabled) {
+  <ng-container *ngTemplateOutlet="svgAxis; context: { reticle, axis }"></ng-container>
+  } } @for (circle of reticle.circles; track $index) { @if (circle.enabled) {
+  <ng-container *ngTemplateOutlet="svgCircle; context: { reticle, circle }"></ng-container>
+  } }
+</svg>
+}
+
+<ng-template #svgAxis let-reticle="reticle" let-axis="axis">
+  <svg:g [attr.transform]="'rotate(' + axis.angle + ' ' + reticle.size / 2 + ' ' + reticle.size / 2 + ')'">
+    <ng-container *ngTemplateOutlet="svgAxisLine; context: { reticle, axis }"></ng-container>
+    @for (marker of axis.markers; track marker.id) { @if (getAxisMarkerLines(reticle, axis, marker); as markers) { @for
+    (line of markers; track line.id) {
+    <ng-container *ngTemplateOutlet="svgAxisMarkers; context: { reticle, axis, line }"></ng-container>
+
+    @if (line.renderNumber && marker.numbered) {
+    <text
+      class="marker-number"
+      dominant-baseline="hanging"
+      [attr.x]="line.textX"
+      [attr.y]="line.textY"
+      [attr.rotate]="360 - axis.angle">
+      {{ line.renderNumber }}
+    </text>
+    } } } }
+  </svg:g>
+</ng-template>
+
+<ng-template #svgAxisLine let-reticle="reticle" let-axis="axis">
+  <svg:line
+    [attr.x1]="axis.offsetStart"
+    [attr.y1]="reticle.size / 2"
+    [attr.x2]="reticle.size - axis.offsetEnd"
+    [attr.y2]="reticle.size / 2"
+    [attr.stroke-width]="axis.strokeWidth"
+    [attr.stroke]="axis.color" />
+</ng-template>
+
+<ng-template #svgCircle let-reticle="reticle" let-circle="circle">
+  <svg:circle
+    cx="50%"
+    cy="50%"
+    [attr.r]="circle.radius"
+    [attr.stroke-width]="circle.strokeWidth"
+    [attr.stroke]="circle.color"
+    fill="none" />
+</ng-template>
+
+<ng-template #svgAxisMarkers let-reticle="reticle" let-axis="axis" let-line="line">
+  <svg:line
+    [attr.x1]="line.x1"
+    [attr.y1]="line.y1"
+    [attr.x2]="line.x2"
+    [attr.y2]="line.y2"
+    [attr.stroke-width]="line.stokeWidth"
+    [attr.stroke]="line.color" />
+</ng-template>

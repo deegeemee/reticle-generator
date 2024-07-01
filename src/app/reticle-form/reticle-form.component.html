@@ -1,0 +1,222 @@
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-label>image size</mat-label>
+    <input type="number" matInput formControlName="size" placeholder="Name" />
+  </mat-form-field>
+
+  <button
+    type="button"
+    mat-flat-button
+    (click)="form.controls.axis.insert(form.controls.axis.controls.length, getAxisForm())">
+    Add axis
+  </button>
+
+  <button type="button" mat-flat-button (click)="form.controls.circles.insert(-1, getCircleForm())">Add circle</button>
+
+  @if(reticleHasContent$ | async) {
+  <button
+    type="button"
+    mat-flat-button
+    (click)="downloadButtonClicked.emit($any(form.value))"
+    (keyup.enter)="downloadButtonClicked.emit($any(form.value))">
+    Download PNG
+  </button>
+  } @for (axis of form.controls.axis.controls; track $index) {
+  <ng-container *ngTemplateOutlet="axisForm; context: { form, axisIndex: $index }"></ng-container>
+  <mat-divider></mat-divider>
+  } @for (circle of form.controls.circles.controls; track $index) {
+  <ng-container *ngTemplateOutlet="circleForm; context: { form, circleIndex: $index }"></ng-container>
+  <mat-divider></mat-divider>
+  }
+</form>
+
+<ng-template #axisForm let-form="form" let-axisIndex="axisIndex">
+  <ng-container *ngIf="form.controls.axis.controls[axisIndex] as axisForm">
+    <div [formGroup]="axisForm" class="form-axis">
+      <header>
+        <h2>Axis {{ axisIndex + 1 }}</h2>
+        <h5>
+          {{ form.controls.size.value - axisForm.value.offsetStart - axisForm.value.offsetStart }}
+          px
+        </h5>
+        <mat-slide-toggle formControlName="enabled">Enabled</mat-slide-toggle>
+      </header>
+      <button type="button" mat-mini-fab (click)="form.controls.axis.removeAt(axisIndex)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <mat-form-field>
+        <mat-label>color</mat-label>
+        <input type="color" matInput formControlName="color" placeholder="Color" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>angle of axis</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="angle"
+          placeholder="Angle"
+          [min]="axisFormSettings.angle.min"
+          [max]="axisFormSettings.angle.max" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>line width in px</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="strokeWidth"
+          placeholder="Stroke width"
+          [min]="axisFormSettings.strokeWidth.min"
+          [max]="axisFormSettings.strokeWidth.max" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>axis start offset</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="offsetStart"
+          placeholder="offsetStart"
+          [min]="axisFormSettings.offsetStart.min"
+          [max]="axisFormSettings.offsetStart.max" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>axis end offset</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="offsetEnd"
+          placeholder="offsetEnd"
+          [min]="axisFormSettings.offsetEnd.min"
+          [max]="axisFormSettings.offsetEnd.max" />
+      </mat-form-field>
+    </div>
+
+    @for (marker of axisForm.controls.markers.controls; let markerIndex = $index; track markerIndex) {
+    <ng-container *ngTemplateOutlet="axisMarkerForm; context: { axisForm, axisIndex, markerIndex }"></ng-container>
+    }
+
+    <button type="button" mat-flat-button (click)="axisForm.controls.markers.insert(-1, getAxisMarkerForm())">
+      Add marker
+    </button>
+  </ng-container>
+</ng-template>
+
+<ng-template #axisMarkerForm let-axisForm="axisForm" let-axisIndex="axisIndex" let-markerIndex="markerIndex">
+  <ng-container *ngIf="axisForm.controls.markers.controls[markerIndex] as markerForm">
+    <div [formGroup]="markerForm" class="form-axis-marker">
+      <header>
+        <h3>Axis {{ axisIndex + 1 }} - Marker {{ markerIndex + 1 }}</h3>
+        <mat-slide-toggle formControlName="enabled">Enabled</mat-slide-toggle>
+        <mat-slide-toggle formControlName="numbered">Show numbers</mat-slide-toggle>
+      </header>
+      <button type="button" mat-mini-fab (click)="axisForm.controls.markers.removeAt(markerIndex)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <mat-form-field>
+        <mat-label>color</mat-label>
+        <input type="color" matInput formControlName="color" placeholder="Color" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>max count (0 to disable)</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="maxCount"
+          placeholder="Count"
+          [min]="axisMarkerFormSettings.maxCount.min"
+          [max]="axisMarkerFormSettings.maxCount.max" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>gap in px</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="gap"
+          placeholder="gap"
+          [min]="axisMarkerFormSettings.gap.min"
+          [max]="axisMarkerFormSettings.gap.max" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>offset</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="offset"
+          placeholder="offset"
+          [min]="axisMarkerFormSettings.offset.min"
+          [max]="axisMarkerFormSettings.offset.max" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>stroke width</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="strokeWidth"
+          placeholder="Stroke width"
+          [min]="axisMarkerFormSettings.strokeWidth.min"
+          [max]="axisMarkerFormSettings.strokeWidth.max" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Length</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="length"
+          placeholder="Length"
+          [min]="axisMarkerFormSettings.length.min"
+          [max]="axisMarkerFormSettings.length.max" />
+      </mat-form-field>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #circleForm let-form="form" let-circleIndex="circleIndex">
+  <ng-container *ngIf="form.controls.circles.controls[circleIndex] as circleForm">
+    <div [formGroup]="circleForm" class="form-circle">
+      <header>
+        <h2>Circle {{ circleIndex + 1 }}</h2>
+        <mat-slide-toggle formControlName="enabled">Enabled</mat-slide-toggle>
+      </header>
+      <button type="button" mat-mini-fab (click)="form.controls.circles.removeAt(circleIndex)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <mat-form-field>
+        <mat-label>color</mat-label>
+        <input type="color" matInput formControlName="color" placeholder="Color" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>radius of circle</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="radius"
+          placeholder="Radius"
+          [min]="circleFormSettings.radius.min"
+          [max]="circleFormSettings.radius.max" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>line width in px</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="strokeWidth"
+          placeholder="Stroke width"
+          [min]="circleFormSettings.strokeWidth.min"
+          [max]="circleFormSettings.strokeWidth.max" />
+      </mat-form-field>
+    </div>
+  </ng-container>
+</ng-template>

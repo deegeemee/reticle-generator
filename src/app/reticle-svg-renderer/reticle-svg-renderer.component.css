@@ -1,0 +1,14 @@
+:host {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--mdc-theme-surface);
+}
+
+.marker-number {
+  font-size: 20px;
+  line-height: 20px;
+  white-space: nowrap;
+}
