@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { ReticleFormComponent } from './reticle-form/reticle-form.component';
@@ -10,7 +10,7 @@ import { ReticleType } from './reticle.types';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [AsyncPipe, HttpClientModule, ReticleFormComponent, ReticleSvgRendererComponent, SocialBarComponent],
+  imports: [AsyncPipe, ReticleFormComponent, ReticleSvgRendererComponent, SocialBarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

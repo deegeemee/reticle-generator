@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { ReticleFormComponent } from './reticle-form/reticle-form.component';
 import { ReticleSvgRendererComponent } from './reticle-svg-renderer/reticle-svg-renderer.component';
 import { ReticleType } from './reticle.types';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('AppComponent', () => {
   // The fixture of the component
@@ -22,6 +23,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [provideHttpClient()],
     }).compileComponents();
     fix = TestBed.createComponent(AppComponent);
     ci = fix.componentInstance;
