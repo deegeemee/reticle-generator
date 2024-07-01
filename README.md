@@ -1,3 +1,7 @@
+![Angular](https://img.shields.io/badge/angular-18.0.5-brightgreen)
+![npm](https://img.shields.io/badge/npm-10.5.2-brightgreen)
+[![Build Status](https://jenkins.indivirtuell.net/buildStatus/icon?job=deegeemee%2Freticle-generator%2Fmain)](https://jenkins.indivirtuell.net/job/deegeemee/job/reticle-generator/job/main/)
+
 # Reticle Generator
 
 The Reticle Generator is a versatile tool designed to simplify the process of creating reticles for game development prototyping. With this tool, developers can effortlessly generate reticles of any size, tailored to their specific needs.
