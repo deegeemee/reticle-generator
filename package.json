@@ -1,8 +1,8 @@
 {
   "name": "reticle-generator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
-    "postversion": "jq -r '.[\"version\"]' package.json > src/assets/version && git add . && git commit --amend -m \"Release v`cat src/assets/version`\" && git tag -f v`cat src/assets/version`",
+    "postversion": "jq -r '.[\"version\"]' package.json > src/assets/version && git add . && git commit --amend -m \"release: v`cat src/assets/version`\" && git tag -f v`cat src/assets/version`",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
