@@ -21,12 +21,12 @@ header {
   grid-template-columns: 1fr 1fr;
   align-items: center;
 
-  h5 {
+  .mat-label-small {
     opacity: 0.5;
   }
 
   .title {
-    justify-self: end;
+    text-align: right;
   }
 
 }
