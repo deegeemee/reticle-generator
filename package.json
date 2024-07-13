@@ -19,9 +19,6 @@
     "clean": "npm run clean:coverage && npm run clean:dist",
     "prepare": "husky"
   },
-  "pre-commit": [
-    "devcheck"
-  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.1.0",
