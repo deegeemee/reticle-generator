@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         APP_NAME = 'reticle-generator'
+        HUSKY = 0
     }
     tools {
         nodejs 'nodejs 20.x'
